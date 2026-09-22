@@ -3,82 +3,239 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>نظام تأخير الطلاب V4.1</title>
+<title>نظام تأخير الطلاب V6</title>
 <style>
-:root{--bg:#f4f7fb;--card:#fff;--ink:#162033;--muted:#6b7280;--primary:#1f5fbf;--primary2:#174a95;--danger:#b42318;--ok:#14804a;--line:#e5e7eb;--shadow:0 10px 30px rgba(22,32,51,.08);--warn:#9a6700}
+:root{--bg:#f4f7fb;--card:#fff;--ink:#162033;--muted:#6b7280;--primary:#1f5fbf;--primary2:#174a95;--danger:#b42318;--ok:#14804a;--line:#e5e7eb;--shadow:0 10px 30px rgba(22,32,51,.08);--warn:#9a6700;--purple:#6d28d9}
 *{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-.app{max-width:1100px;margin:auto;min-height:100vh;padding:18px}.top{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap}.brand h1{font-size:22px;margin:0}.brand small{color:var(--muted)}
-.card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-bottom:14px;border:1px solid #eef1f5}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.btn{border:0;border-radius:14px;padding:13px 16px;font-weight:700;font-size:15px;cursor:pointer;background:#eef3fb;color:var(--ink)}.btn.primary{background:var(--primary);color:#fff}.btn.ghost{background:#fff;border:1px solid var(--line)}.btn.danger{background:#fff0ee;color:var(--danger)}.btn.ok{background:#eaf8f0;color:var(--ok)}
-.teacher{padding:16px;text-align:right;background:#fff;border:1px solid var(--line);border-radius:16px;cursor:pointer}.teacher b{display:block;font-size:18px;margin-bottom:6px}.teacher span{color:var(--muted)}.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap}.section-title h2{font-size:20px;margin:0}.badge{background:#e8f1ff;color:var(--primary2);padding:7px 11px;border-radius:999px;font-weight:700;font-size:13px}.breadcrumb{display:flex;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:14px;margin-bottom:12px}.student-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}.student{display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:right;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px}.student .name{font-weight:700;line-height:1.5}.student .count{font-size:12px;color:var(--muted);margin-top:4px}.latebtn{flex:0 0 auto;background:#fff0ee;color:var(--danger);border:1px solid #ffd7d2;border-radius:12px;padding:10px 12px;font-weight:700;cursor:pointer}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.search,.field{width:100%;border:1px solid var(--line);background:#fff;border-radius:13px;padding:13px 14px;font-size:16px;outline:none}.search{margin-bottom:12px}.log{width:100%;border-collapse:collapse}.log th,.log td{padding:11px 8px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}.log th{font-size:13px;color:var(--muted)}.tablewrap{overflow:auto}.empty{text-align:center;color:var(--muted);padding:32px 10px}.notice{background:#eef8f2;border:1px solid #cce8d7;color:#185b36;border-radius:14px;padding:12px;font-size:14px;line-height:1.7;margin-bottom:12px}.hidden{display:none!important}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#162033;color:#fff;border-radius:12px;padding:12px 18px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.2s;z-index:99}.toast.show{opacity:1}.modal{position:fixed;inset:0;background:rgba(15,23,42,.45);display:flex;align-items:center;justify-content:center;padding:18px;z-index:100}.modalbox{background:#fff;width:min(480px,100%);border-radius:18px;padding:18px;box-shadow:var(--shadow)}.modal-actions{display:flex;gap:8px;margin-top:16px}.modal-actions .btn{flex:1}.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:16px}.stat{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:14px}.stat b{font-size:22px;display:block;margin-top:5px}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.tab.active{background:var(--primary);color:#fff}.mini{font-size:12px;color:var(--muted)}.spinner{padding:22px;text-align:center;color:var(--muted)}
-@media(max-width:600px){.app{padding:12px}.card{padding:14px}.brand h1{font-size:19px}.student-list{grid-template-columns:1fr}.log{font-size:12px}.log th,.log td{white-space:nowrap}}
+.app{max-width:1180px;margin:auto;min-height:100vh;padding:18px}.top{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap}.brand h1{font-size:22px;margin:0}.brand small{color:var(--muted)}
+.card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-bottom:14px;border:1px solid #eef1f5}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.btn{border:0;border-radius:14px;padding:13px 16px;font-weight:700;font-size:15px;cursor:pointer;background:#eef3fb;color:var(--ink)}.btn.primary{background:var(--primary);color:#fff}.btn.ghost{background:#fff;border:1px solid var(--line)}.btn.danger{background:#fff0ee;color:var(--danger)}.btn.ok{background:#eaf8f0;color:var(--ok)}.btn.warn{background:#fff7e6;color:var(--warn)}.btn.purple{background:#f3e8ff;color:var(--purple)}
+.teacher{padding:16px;text-align:right;background:#fff;border:1px solid var(--line);border-radius:16px;cursor:pointer}.teacher b{display:block;font-size:18px;margin-bottom:6px}.teacher span{color:var(--muted)}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap}.section-title h2{font-size:20px;margin:0}.badge{background:#e8f1ff;color:var(--primary2);padding:7px 11px;border-radius:999px;font-weight:700;font-size:13px}.breadcrumb{display:flex;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:14px;margin-bottom:12px}
+.student-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}.student{display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:right;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px}.student .name{font-weight:700;line-height:1.5}.student .count{font-size:12px;color:var(--muted);margin-top:4px}.latebtn{flex:0 0 auto;background:#fff0ee;color:var(--danger);border:1px solid #ffd7d2;border-radius:12px;padding:10px 12px;font-weight:700;cursor:pointer}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.search,.field,.select{width:100%;border:1px solid var(--line);background:#fff;border-radius:13px;padding:13px 14px;font-size:16px;outline:none}.search{margin-bottom:12px}.select{min-width:150px}.toolbar .field,.toolbar .select{width:auto;flex:1 1 150px;max-width:240px}
+.log{width:100%;border-collapse:collapse}.log th,.log td{padding:11px 8px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}.log th{font-size:13px;color:var(--muted)}.tablewrap{overflow:auto}.empty{text-align:center;color:var(--muted);padding:32px 10px}.notice{background:#eef8f2;border:1px solid #cce8d7;color:#185b36;border-radius:14px;padding:12px;font-size:14px;line-height:1.7;margin-bottom:12px}.warnbox{background:#fff7e6;border:1px solid #f3d59a;color:#7a5200;border-radius:14px;padding:12px;font-size:14px;line-height:1.7;margin-bottom:12px}
+.hidden{display:none!important}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#162033;color:#fff;border-radius:12px;padding:12px 18px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.2s;z-index:99}.toast.show{opacity:1}.modal{position:fixed;inset:0;background:rgba(15,23,42,.45);display:flex;align-items:center;justify-content:center;padding:18px;z-index:100}.modalbox{background:#fff;width:min(560px,100%);max-height:90vh;overflow:auto;border-radius:18px;padding:18px;box-shadow:var(--shadow)}.modal-actions{display:flex;gap:8px;margin-top:16px}.modal-actions .btn{flex:1}
+.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}.stat{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:14px}.stat b{font-size:22px;display:block;margin-top:5px}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.tab.active{background:var(--primary);color:#fff}.mini{font-size:12px;color:var(--muted)}.spinner{padding:22px;text-align:center;color:var(--muted)}
+.result-list{display:grid;gap:8px}.result{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);border-radius:13px;padding:11px;background:#fff}.result b{display:block}.result small{color:var(--muted)}.divider{height:1px;background:var(--line);margin:14px 0}.pill{display:inline-block;padding:5px 8px;border-radius:999px;background:#eef3fb;font-size:12px}.danger-text{color:var(--danger)}
+@media(max-width:600px){.app{padding:12px}.card{padding:14px}.brand h1{font-size:19px}.student-list{grid-template-columns:1fr}.log{font-size:12px}.log th,.log td{white-space:nowrap}.toolbar .field,.toolbar .select{max-width:none;flex-basis:100%}}
 </style>
-</head><body>
+</head>
+<body>
 <div class="app">
-<div class="top"><div class="brand"><h1>نظام تأخير الطلاب</h1><small id="todayText"></small></div><div class="toolbar"><button class="btn ghost hidden" id="todayLogBtn" onclick="showLog()">السجل</button><button class="btn ghost hidden" id="changeTeacherBtn" onclick="changeTeacher()">تغيير المعلم</button><button class="btn ghost hidden" id="adminBackBtn" onclick="exitAdmin()">خروج الإدارة</button></div></div>
-<div id="teacherView" class="card"><div class="section-title"><h2>اختر المعلم المناوب</h2><span class="badge">الخطوة 1</span></div><div id="teachers" class="grid"><div class="spinner">جاري الاتصال بقاعدة البيانات...</div></div><div style="margin-top:14px"><button class="btn ghost" onclick="adminLogin()">🔒 دخول الإدارة</button></div></div>
-<div id="gradeView" class="card hidden"><div class="section-title"><h2>اختر الصف</h2><span id="teacherBadge" class="badge"></span></div><div class="grid"><button class="btn primary" onclick="selectGrade(7)">الصف السابع</button><button class="btn primary" onclick="selectGrade(8)">الصف الثامن</button><button class="btn primary" onclick="selectGrade(9)">الصف التاسع</button></div></div>
-<div id="sectionView" class="card hidden"><div class="section-title"><h2>اختر الشعبة</h2><button class="btn ghost" onclick="backToGrades()">رجوع</button></div><div id="sections" class="grid"></div></div>
-<div id="studentsView" class="card hidden"><div class="section-title"><h2>أسماء الطلاب</h2><button class="btn ghost" onclick="backToSections()">رجوع</button></div><div id="crumb" class="breadcrumb"></div><input id="search" class="search" placeholder="ابحث باسم الطالب..." oninput="renderStudents()" /><div class="toolbar" style="margin-bottom:12px"><button class="btn ok" onclick="openAddStudent()">+ إضافة طالب غير موجود</button></div><div id="students" class="student-list"></div></div>
-<div id="logView" class="card hidden"><div class="section-title"><h2 id="logTitle">السجل اليومي</h2><button class="btn ghost" onclick="closeLog()">رجوع</button></div><div class="toolbar" style="margin-bottom:12px"><button class="btn primary" id="dailyBtn" onclick="setLogMode('daily')">سجل يومي</button><button class="btn ghost" id="weeklyBtn" onclick="setLogMode('weekly')">سجل أسبوعي</button><button class="btn ghost" onclick="exportCurrentLog()">تصدير Excel</button></div><div id="logWrap"></div></div>
-<div id="adminView" class="card hidden"><div class="section-title"><h2>لوحة الإدارة</h2><span class="badge">صلاحية المدير</span></div><div class="admin-grid"><div class="stat">تأخيرات اليوم<b id="statToday">0</b></div><div class="stat">الطلاب المضافون<b id="statAdded">0</b></div><div class="stat">دخول المعلمين اليوم<b id="statAccess">0</b></div></div><div class="tabs"><button class="btn tab active" id="tabLogs" onclick="adminTab('logs')">سجل التأخيرات</button><button class="btn tab" id="tabAccess" onclick="adminTab('access')">دخول المعلمين</button><button class="btn tab" id="tabStudents" onclick="adminTab('students')">الطلاب المضافون</button></div><div id="adminContent"></div></div>
-<div class="notice">✅ النسخة V4 مرتبطة بقاعدة البيانات الأونلاين. تسجيلات المعلمين وإضافات الطلاب تظهر من جميع الأجهزة.</div>
+  <div class="top">
+    <div class="brand"><h1>نظام تأخير الطلاب</h1><small id="todayText"></small></div>
+    <div class="toolbar">
+      <button class="btn ghost hidden" id="todayLogBtn" onclick="showLog()">السجل</button>
+      <button class="btn ghost hidden" id="changeTeacherBtn" onclick="changeTeacher()">تغيير المعلم</button>
+      <button class="btn ghost hidden" id="adminBackBtn" onclick="exitAdmin()">خروج الإدارة</button>
+    </div>
+  </div>
+
+  <div id="teacherView" class="card">
+    <div class="section-title"><h2>اختر المعلم المناوب</h2><span class="badge">الخطوة 1</span></div>
+    <div id="teachers" class="grid"><div class="spinner">جاري الاتصال بقاعدة البيانات...</div></div>
+    <div style="margin-top:14px"><button class="btn ghost" onclick="adminLogin()">🔒 دخول الإدارة</button></div>
+  </div>
+
+  <div id="gradeView" class="card hidden">
+    <div class="section-title"><h2>اختر الصف</h2><span id="teacherBadge" class="badge"></span></div>
+    <div class="warnbox"><b>🔎 الطالب لا يعرف صفه؟</b><br>ابحث عن اسمه هنا في جميع الصفوف والشعب.</div>
+    <input id="globalSearch" class="search" placeholder="ابحث عن الطالب في جميع الصفوف والشعب..." oninput="globalSearchChanged()" />
+    <div id="globalSearchResults" class="result-list" style="margin-bottom:14px"></div>
+    <div class="grid">
+      <button class="btn primary" onclick="selectGrade(7)">الصف السابع</button>
+      <button class="btn primary" onclick="selectGrade(8)">الصف الثامن</button>
+      <button class="btn primary" onclick="selectGrade(9)">الصف التاسع</button>
+    </div>
+  </div>
+
+  <div id="sectionView" class="card hidden">
+    <div class="section-title"><h2>اختر الشعبة</h2><button class="btn ghost" onclick="backToGrades()">رجوع</button></div>
+    <div id="sections" class="grid"></div>
+  </div>
+
+  <div id="studentsView" class="card hidden">
+    <div class="section-title"><h2>أسماء الطلاب</h2><button class="btn ghost" onclick="backToSections()">رجوع</button></div>
+    <div id="crumb" class="breadcrumb"></div>
+    <input id="search" class="search" placeholder="ابحث باسم الطالب داخل هذه الشعبة..." oninput="renderStudents()" />
+    <div id="students" class="student-list"></div>
+    <div id="addMissingWrap" class="hidden" style="margin-top:12px"></div>
+  </div>
+
+  <div id="logView" class="card hidden">
+    <div class="section-title"><h2 id="logTitle">السجل اليومي</h2><button class="btn ghost" onclick="closeLog()">رجوع</button></div>
+    <div class="toolbar" style="margin-bottom:12px">
+      <button class="btn primary" id="dailyBtn" onclick="setLogMode('daily')">سجل يومي</button>
+      <button class="btn ghost" id="weeklyBtn" onclick="setLogMode('weekly')">سجل أسبوعي</button>
+      <button class="btn ghost" onclick="exportCurrentLog()">تصدير Excel</button>
+    </div>
+    <div id="logWrap"></div>
+  </div>
+
+  <div id="adminView" class="card hidden">
+    <div class="section-title">
+      <h2>لوحة الإدارة</h2>
+      <div class="toolbar"><span class="badge">صلاحية المدير</span><button class="btn ok" onclick="downloadFullBackup()">📥 نسخة احتياطية كاملة</button></div>
+    </div>
+    <div class="admin-grid">
+      <div class="stat">تأخيرات اليوم<b id="statToday">0</b></div>
+      <div class="stat">تأخيرات الأسبوع<b id="statWeek">0</b></div>
+      <div class="stat">تأخيرات الشهر<b id="statMonth">0</b></div>
+      <div class="stat">الطلاب المضافون<b id="statAdded">0</b></div>
+      <div class="stat">دخول المعلمين اليوم<b id="statAccess">0</b></div>
+    </div>
+    <div class="tabs">
+      <button class="btn tab active" id="tabLogs" onclick="adminTab('logs')">السجلات والتقارير</button>
+      <button class="btn tab" id="tabManual" onclick="adminTab('manual')">+ تسجيل إداري</button>
+      <button class="btn tab" id="tabSearch" onclick="adminTab('search')">بحث وسجل طالب</button>
+      <button class="btn tab" id="tabFrequent" onclick="adminTab('frequent')">كثيرو التأخير</button>
+      <button class="btn tab" id="tabAccess" onclick="adminTab('access')">دخول المعلمين</button>
+      <button class="btn tab" id="tabStudents" onclick="adminTab('students')">الطلاب المضافون</button>
+    </div>
+    <div id="adminContent"></div>
+  </div>
+
+  <div class="notice">✅ النسخة V6: بحث عام عن الطالب، إضافة الطالب داخل شعبته، منع تكرار المعلم، وتقارير وصلاحيات موسعة للمدير.</div>
 </div>
+
 <div id="toast" class="toast"></div>
-<div id="confirmModal" class="modal hidden"><div class="modalbox"><h3>تأكيد تسجيل التأخير</h3><div id="confirmText"></div><div class="modal-actions"><button class="btn ghost" onclick="cancelConfirm()">إلغاء</button><button class="btn danger" onclick="confirmLate()">تسجيل تأخير</button></div></div></div>
-<div id="addStudentModal" class="modal hidden"><div class="modalbox"><h3>إضافة طالب</h3><div class="mini" id="addStudentPlace"></div><input id="newStudentName" class="field" style="margin-top:12px" placeholder="اكتب اسم الطالب كاملاً" /><div class="modal-actions"><button class="btn ghost" onclick="closeAddStudent()">إلغاء</button><button class="btn ok" onclick="saveNewStudent()">حفظ الطالب</button></div></div></div>
-<div id="pinModal" class="modal hidden"><div class="modalbox"><h3 id="pinTitle">دخول الإدارة</h3><div id="pinHelp" class="mini"></div><input id="pinInput" type="password" inputmode="numeric" class="field" style="margin-top:12px" placeholder="الرقم السري" /><div class="modal-actions"><button class="btn ghost" onclick="closePin()">إلغاء</button><button class="btn primary" onclick="submitPin()">متابعة</button></div></div></div>
+
+<div id="confirmModal" class="modal hidden"><div class="modalbox">
+  <h3>تأكيد تسجيل التأخير</h3><div id="confirmText"></div>
+  <div class="modal-actions"><button class="btn ghost" onclick="cancelConfirm()">إلغاء</button><button class="btn danger" onclick="confirmLate()">تسجيل تأخير</button></div>
+</div></div>
+
+<div id="addStudentModal" class="modal hidden"><div class="modalbox">
+  <h3>إضافة طالب إلى الشعبة</h3><div class="mini" id="addStudentPlace"></div>
+  <input id="newStudentName" class="field" style="margin-top:12px" placeholder="اكتب اسم الطالب كاملاً" />
+  <div class="modal-actions"><button class="btn ghost" onclick="closeAddStudent()">إلغاء</button><button class="btn ok" onclick="saveNewStudent()">حفظ الطالب</button></div>
+</div></div>
+
+<div id="pinModal" class="modal hidden"><div class="modalbox">
+  <h3 id="pinTitle">دخول الإدارة</h3><div id="pinHelp" class="mini"></div>
+  <input id="pinInput" type="password" inputmode="numeric" class="field" style="margin-top:12px" placeholder="الرقم السري" />
+  <div class="modal-actions"><button class="btn ghost" onclick="closePin()">إلغاء</button><button class="btn primary" onclick="submitPin()">متابعة</button></div>
+</div></div>
+
 <script>
 const SUPABASE_URL='https://ipeshtarxaladyopdoip.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlwZXNodGFyeGFsYWR5b3Bkb2lwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAwOTIxMzEsImV4cCI6MjEwNTY2ODEzMX0.A5MdgZYA1ZVvAn2J8yqslPCapvaX3qADCXqACqG7SLw';
 const H={'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json'};
 let teachers=[],teacher=null,sessionId=null,grade=null,section=null,students=[],pendingStudent=null,logMode='daily',currentLog=[],adminPin='',adminMode='logs';
+let globalTimer=null,pendingGlobalName='',lastGlobalResults=[],manualResultsCache=[],frequentCache=[];
 function $(id){return document.getElementById(id)}
 function hideAll(){['teacherView','gradeView','sectionView','studentsView','logView','adminView'].forEach(x=>$(x).classList.add('hidden'))}
-function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2300)}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2600)}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function muscatDate(d=new Date()){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Muscat',year:'numeric',month:'2-digit',day:'2-digit'}).format(d)}
 function muscatTime(v){return new Intl.DateTimeFormat('ar-OM',{timeZone:'Asia/Muscat',hour:'2-digit',minute:'2-digit'}).format(new Date(v))}
 function displayDate(s){if(!s)return'';const [y,m,d]=s.split('-');return `${d}/${m}/${y}`}
 function isoDateFromTs(ts){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Muscat',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(ts))}
-function weekRange(){const now=new Date();const om=new Date(new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Muscat',year:'numeric',month:'2-digit',day:'2-digit'}).format(now));let day=om.getDay();let diff=day===6?-6:1-day;let st=new Date(om);st.setDate(om.getDate()+diff);let en=new Date(st);en.setDate(st.getDate()+4);return {start:muscatDate(st),end:muscatDate(en)}}
+function dateFromYmd(s){const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12,0,0)}
+function addDays(s,n){const d=dateFromYmd(s);d.setDate(d.getDate()+n);return muscatDate(d)}
+function weekRange(anchor=muscatDate()){const d=dateFromYmd(anchor);const day=d.getDay();const start=new Date(d);start.setDate(d.getDate()-day);const st=muscatDate(start);return {start:st,end:addDays(st,6)}}
+function monthRange(anchor=muscatDate()){const d=dateFromYmd(anchor);const s=new Date(d.getFullYear(),d.getMonth(),1,12);const e=new Date(d.getFullYear(),d.getMonth()+1,0,12);return {start:muscatDate(s),end:muscatDate(e)}}
 async function rpc(name,body={}){const r=await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`,{method:'POST',headers:H,body:JSON.stringify(body)});const txt=await r.text();if(!r.ok)throw new Error(txt||r.statusText);try{return JSON.parse(txt)}catch{return txt}}
 async function table(path){const r=await fetch(`${SUPABASE_URL}/rest/v1/${path}`,{headers:H});const t=await r.text();if(!r.ok)throw new Error(t);return JSON.parse(t)}
-async function init(){ $('todayText').textContent=new Intl.DateTimeFormat('ar-OM',{timeZone:'Asia/Muscat',weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(new Date()); try{teachers=await table('teachers?select=id,name,duty_day,duty_day_ar&order=duty_day.asc');renderTeachers()}catch(e){$('teachers').innerHTML='<div class="empty">تعذر الاتصال بقاعدة البيانات. تأكد من تشغيل كود V4.</div>';console.error(e)}}
+
+async function init(){
+  $('todayText').textContent=new Intl.DateTimeFormat('ar-OM',{timeZone:'Asia/Muscat',weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(new Date());
+  try{teachers=await table('teachers?select=id,name,duty_day,duty_day_ar&name=neq.%D8%A7%D9%84%D8%A5%D8%AF%D8%A7%D8%B1%D8%A9&order=duty_day.asc');renderTeachers()}
+  catch(e){$('teachers').innerHTML='<div class="empty">تعذر الاتصال بقاعدة البيانات.</div>';console.error(e)}
+}
 function renderTeachers(){$('teachers').innerHTML=teachers.map(t=>`<button class="teacher" onclick="chooseTeacher(${t.id})"><b>${esc(t.name)}</b><span>${esc(t.duty_day_ar)}</span></button>`).join('')}
 async function chooseTeacher(id){teacher=teachers.find(x=>x.id===id);try{sessionId=await rpc('teacher_login',{p_teacher_id:id});hideAll();$('gradeView').classList.remove('hidden');$('teacherBadge').textContent=teacher.name;$('todayLogBtn').classList.remove('hidden');$('changeTeacherBtn').classList.remove('hidden')}catch(e){toast('تعذر تسجيل دخول المعلم');console.error(e)}}
-function changeTeacher(){teacher=null;sessionId=null;grade=section=null;hideAll();$('teacherView').classList.remove('hidden');$('todayLogBtn').classList.add('hidden');$('changeTeacherBtn').classList.add('hidden')}
+function changeTeacher(){teacher=null;sessionId=null;grade=section=null;hideAll();$('teacherView').classList.remove('hidden');$('todayLogBtn').classList.add('hidden');$('changeTeacherBtn').classList.add('hidden');$('globalSearch').value='';$('globalSearchResults').innerHTML=''}
+
+function globalSearchChanged(){clearTimeout(globalTimer);const q=$('globalSearch').value.trim();if(q.length<2){$('globalSearchResults').innerHTML='';return}globalTimer=setTimeout(()=>runGlobalSearch(q),300)}
+async function runGlobalSearch(q){const w=$('globalSearchResults');w.innerHTML='<div class="spinner">جاري البحث...</div>';try{lastGlobalResults=await rpc('search_students',{p_query:q});if(!lastGlobalResults.length){w.innerHTML='<div class="empty">لم يتم العثور على طالب بهذا الاسم. إذا كنت تعرف صفه وشعبته اخترهما ثم أضفه داخل الشعبة.</div>';return}w.innerHTML=lastGlobalResults.map(x=>`<div class="result"><div><b>${esc(x.name)}</b><small>الصف/الشعبة ${x.grade}/${x.section} • إجمالي التأخيرات ${x.total_lates||0}</small></div><button class="btn primary" onclick="openStudentFromGlobal(${x.id})">فتح الشعبة</button></div>`).join('')}catch(e){w.innerHTML='<div class="empty">تعذر البحث.</div>';console.error(e)}}
+async function openStudentFromGlobal(id){const x=lastGlobalResults.find(r=>Number(r.id)===Number(id));if(!x)return;grade=x.grade;section=x.section;pendingGlobalName=x.name;await selectSection(x.section);$('search').value=x.name;renderStudents();setTimeout(()=>{const el=document.querySelector(`[data-student-id="${id}"]`);if(el)el.scrollIntoView({behavior:'smooth',block:'center'})},100)}
+
 function selectGrade(g){grade=g;hideAll();$('sectionView').classList.remove('hidden');const max=g===7?11:g===8?13:13;$('sections').innerHTML=Array.from({length:max},(_,i)=>i+1).map(s=>`<button class="btn primary" onclick="selectSection(${s})">${g}/${s}</button>`).join('')}
 function backToGrades(){hideAll();$('gradeView').classList.remove('hidden')}
-async function selectSection(s){section=s;hideAll();$('studentsView').classList.remove('hidden');$('crumb').innerHTML=`المعلم: <b>${esc(teacher.name)}</b> • الصف/الشعبة: <b>${grade}/${section}</b>`;$('students').innerHTML='<div class="spinner">جاري تحميل الطلاب...</div>';await loadStudents()}
+async function selectSection(s){section=s;hideAll();$('studentsView').classList.remove('hidden');$('crumb').innerHTML=`المعلم: <b>${esc(teacher.name)}</b> • الصف/الشعبة: <b>${grade}/${section}</b>`;$('students').innerHTML='<div class="spinner">جاري تحميل الطلاب...</div>';$('search').value=pendingGlobalName||'';pendingGlobalName='';await loadStudents()}
 function backToSections(){hideAll();$('sectionView').classList.remove('hidden')}
 async function loadStudents(){try{students=await rpc('get_students',{p_grade:grade,p_section:section});renderStudents();if(sessionId)rpc('touch_session',{p_session_id:sessionId}).catch(()=>{})}catch(e){$('students').innerHTML='<div class="empty">تعذر تحميل الطلاب.</div>';console.error(e)}}
-function renderStudents(){const q=$('search').value.trim();const rows=students.filter(x=>!q||x.name.includes(q));$('students').innerHTML=rows.length?rows.map(s=>`<div class="student"><div><div class="name">${esc(s.name)}</div><div class="count">إجمالي مرات التأخير: ${s.total_lates||0}</div></div><button class="latebtn" onclick="askLate(${s.id})">تأخير</button></div>`).join(''):'<div class="empty">لا يوجد طلاب.</div>'}
+function renderStudents(){
+  const q=$('search').value.trim();const rows=students.filter(x=>!q||x.name.includes(q));
+  $('students').innerHTML=rows.length?rows.map(s=>`<div class="student" data-student-id="${s.id}"><div><div class="name">${esc(s.name)}</div><div class="count">إجمالي مرات التأخير: ${s.total_lates||0}</div></div><button class="latebtn" onclick="askLate(${s.id})">تأخير</button></div>`).join(''):'<div class="empty">لا يوجد طالب مطابق داخل هذه الشعبة.</div>';
+  const add=$('addMissingWrap');
+  if(q.length>=3 && rows.length===0){add.classList.remove('hidden');add.innerHTML=`<button class="btn ok" onclick="openAddStudentFromSearch()">+ إضافة «${esc(q)}» إلى ${grade}/${section}</button>`}
+  else{add.classList.add('hidden');add.innerHTML=''}
+}
 function askLate(id){pendingStudent=students.find(x=>x.id===id);$('confirmText').innerHTML=`تسجيل تأخير للطالب:<br><b>${esc(pendingStudent.name)}</b><br>${grade}/${section} — ${esc(teacher.name)}`;$('confirmModal').classList.remove('hidden')}
 function cancelConfirm(){pendingStudent=null;$('confirmModal').classList.add('hidden')}
-async function confirmLate(){if(!pendingStudent)return;const st=pendingStudent,n=st.name;try{const today=await rpc('daily_records',{p_date:muscatDate()});if(today.some(x=>Number(x.student_id)===Number(st.id))){cancelConfirm();toast('⚠️ هذا الطالب مسجل متأخر اليوم مسبقًا');return}await rpc('record_late',{p_student_id:st.id,p_teacher_id:teacher.id,p_session_id:sessionId});cancelConfirm();await loadStudents();toast('تم تسجيل تأخير '+n)}catch(e){toast('تعذر تسجيل التأخير');console.error(e)}}
-function openAddStudent(){$('addStudentPlace').textContent=`سيضاف الطالب إلى الصف/الشعبة ${grade}/${section}`;$('newStudentName').value='';$('addStudentModal').classList.remove('hidden')}
+async function confirmLate(){if(!pendingStudent)return;const st=pendingStudent,n=st.name;try{const today=await rpc('daily_records',{p_date:muscatDate()});if(today.some(x=>Number(x.student_id)===Number(st.id)&&x.teacher_name!=='الإدارة')){cancelConfirm();toast('⚠️ هذا الطالب مسجل متأخر اليوم مسبقًا');return}await rpc('record_late',{p_student_id:st.id,p_teacher_id:teacher.id,p_session_id:sessionId});cancelConfirm();await loadStudents();toast('تم تسجيل تأخير '+n)}catch(e){toast('تعذر تسجيل التأخير');console.error(e)}}
+function openAddStudentFromSearch(){openAddStudent($('search').value.trim())}
+function openAddStudent(prefill=''){$('addStudentPlace').textContent=`سيضاف الطالب إلى الصف/الشعبة ${grade}/${section}`;$('newStudentName').value=prefill;$('addStudentModal').classList.remove('hidden');setTimeout(()=>$('newStudentName').focus(),100)}
 function closeAddStudent(){$('addStudentModal').classList.add('hidden')}
-async function saveNewStudent(){const name=$('newStudentName').value.trim();if(name.length<3)return toast('اكتب اسم الطالب');try{await rpc('add_student',{p_name:name,p_grade:grade,p_section:section});closeAddStudent();await loadStudents();toast('تمت إضافة الطالب')}catch(e){toast('تعذر إضافة الطالب أو أنه موجود');console.error(e)}}
+async function saveNewStudent(){const name=$('newStudentName').value.trim();if(name.length<3)return toast('اكتب اسم الطالب');try{await rpc('add_student_by_teacher',{p_name:name,p_grade:grade,p_section:section,p_teacher_id:teacher.id});closeAddStudent();$('search').value=name;await loadStudents();toast('تمت إضافة الطالب إلى '+grade+'/'+section)}catch(e){toast('تعذر إضافة الطالب');console.error(e)}}
+
 function showLog(){hideAll();$('logView').classList.remove('hidden');setLogMode('daily')}
 function closeLog(){hideAll();$('gradeView').classList.remove('hidden')}
 async function setLogMode(m){logMode=m;$('dailyBtn').className='btn '+(m==='daily'?'primary':'ghost');$('weeklyBtn').className='btn '+(m==='weekly'?'primary':'ghost');$('logTitle').textContent=m==='daily'?'السجل اليومي':'السجل الأسبوعي';$('logWrap').innerHTML='<div class="spinner">جاري تحميل السجل...</div>';try{if(m==='daily')currentLog=await rpc('daily_records',{p_date:muscatDate()});else currentLog=await rpc('weekly_records',{p_start:weekRange().start});renderLog()}catch(e){$('logWrap').innerHTML='<div class="empty">تعذر تحميل السجل.</div>';console.error(e)}}
 function renderLog(){if(!currentLog.length){$('logWrap').innerHTML='<div class="empty">لا توجد تسجيلات.</div>';return}let h=logMode==='weekly'?`<div class="mini" style="margin-bottom:10px">من ${displayDate(weekRange().start)} إلى ${displayDate(weekRange().end)}</div>`:'';h+='<div class="tablewrap"><table class="log"><thead><tr><th>#</th><th>الطالب</th><th>الصف/الشعبة</th><th>التاريخ</th><th>الوقت</th><th>المعلم</th></tr></thead><tbody>';currentLog.forEach((x,i)=>h+=`<tr><td>${i+1}</td><td>${esc(x.student_name)}</td><td>${x.grade}/${x.section}</td><td>${displayDate(isoDateFromTs(x.recorded_at))}</td><td>${muscatTime(x.recorded_at)}</td><td>${esc(x.teacher_name)}</td></tr>`);h+='</tbody></table></div>';$('logWrap').innerHTML=h}
 function exportCurrentLog(){exportRows(currentLog,logMode==='daily'?`سجل_التأخير_${muscatDate()}`:`سجل_التأخير_الأسبوعي_${weekRange().start}`)}
-function exportRows(rows,name){if(!rows.length)return toast('لا توجد بيانات للتصدير');let body='<table><tr><th>الطالب</th><th>الصف</th><th>الشعبة</th><th>التاريخ</th><th>الوقت</th><th>المعلم</th></tr>';rows.forEach(x=>body+=`<tr><td>${esc(x.student_name)}</td><td>${x.grade}</td><td>${x.section}</td><td>${displayDate(isoDateFromTs(x.recorded_at))}</td><td>${muscatTime(x.recorded_at)}</td><td>${esc(x.teacher_name)}</td></tr>`);body+='</table>';const html=`<html dir="rtl"><head><meta charset="utf-8"><style>table{border-collapse:collapse;font-family:Arial}th,td{border:1px solid #bbb;padding:8px;white-space:nowrap}th{background:#eee}td:first-child{min-width:340px}td:nth-child(4){min-width:120px}</style></head><body>${body}</body></html>`;const blob=new Blob(['\ufeff',html],{type:'application/vnd.ms-excel;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name+'.xls';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-async function adminLogin(){try{const isSet=await rpc('admin_pin_is_set');$('pinTitle').textContent=isSet?'دخول الإدارة':'إنشاء رقم سري للإدارة';$('pinHelp').textContent=isSet?'أدخل الرقم السري الخاص بك.':'أول دخول فقط: أنشئ رقمًا سريًا من 4 أرقام أو أكثر. احتفظ به.';$('pinInput').value='';$('pinModal').dataset.setup=isSet?'0':'1';$('pinModal').classList.remove('hidden')}catch(e){toast('شغّل كود V4 الإضافي في Supabase أولاً');console.error(e)}}
+function exportRows(rows,name){if(!rows.length)return toast('لا توجد بيانات للتصدير');let body='<table><tr><th>الطالب</th><th>الصف</th><th>الشعبة</th><th>التاريخ</th><th>الوقت</th><th>المعلم</th><th>السبب</th></tr>';rows.forEach(x=>body+=`<tr><td>${esc(x.student_name)}</td><td>${x.grade}</td><td>${x.section}</td><td>${displayDate(isoDateFromTs(x.recorded_at))}</td><td>${muscatTime(x.recorded_at)}</td><td>${esc(x.teacher_name)}</td><td>${esc(x.reason||'تأخير صباحي')}</td></tr>`);body+='</table>';const html=`<html dir="rtl"><head><meta charset="utf-8"><style>table{border-collapse:collapse;font-family:Arial}th,td{border:1px solid #bbb;padding:8px;white-space:nowrap}th{background:#eee}td:first-child{min-width:340px}td:nth-child(4){min-width:120px}</style></head><body>${body}</body></html>`;const blob=new Blob(['\ufeff',html],{type:'application/vnd.ms-excel;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name+'.xls';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+
+async function adminLogin(){try{const isSet=await rpc('admin_pin_is_set');$('pinTitle').textContent=isSet?'دخول الإدارة':'إنشاء رقم سري للإدارة';$('pinHelp').textContent=isSet?'أدخل الرقم السري الخاص بك.':'أول دخول فقط: أنشئ رقمًا سريًا من 4 أرقام أو أكثر. احتفظ به.';$('pinInput').value='';$('pinModal').dataset.setup=isSet?'0':'1';$('pinModal').classList.remove('hidden')}catch(e){toast('تأكد من تشغيل تحديث Supabase');console.error(e)}}
 function closePin(){$('pinModal').classList.add('hidden')}
 async function submitPin(){const p=$('pinInput').value.trim();if(p.length<4)return toast('الرقم السري 4 أرقام أو أكثر');try{if($('pinModal').dataset.setup==='1'){await rpc('set_admin_pin',{p_pin:p});adminPin=p}else{const ok=await rpc('verify_admin_pin',{p_pin:p});if(!ok)return toast('الرقم السري غير صحيح');adminPin=p}closePin();openAdmin()}catch(e){toast('تعذر دخول الإدارة');console.error(e)}}
 async function openAdmin(){hideAll();$('adminView').classList.remove('hidden');$('adminBackBtn').classList.remove('hidden');$('todayLogBtn').classList.add('hidden');$('changeTeacherBtn').classList.add('hidden');await renderAdmin()}
 function exitAdmin(){adminPin='';$('adminBackBtn').classList.add('hidden');hideAll();$('teacherView').classList.remove('hidden')}
-function adminTab(m){adminMode=m;['Logs','Access','Students'].forEach(n=>$('tab'+n).classList.remove('active'));$('tab'+m.charAt(0).toUpperCase()+m.slice(1)).classList.add('active');renderAdminContent()}
-async function renderAdmin(){try{const [today,added,sessions]=await Promise.all([rpc('admin_daily_records',{p_pin:adminPin,p_date:muscatDate()}),rpc('admin_added_students',{p_pin:adminPin}),rpc('admin_teacher_sessions',{p_pin:adminPin,p_from:muscatDate(),p_to:muscatDate()})]);$('statToday').textContent=today.length;$('statAdded').textContent=added.length;$('statAccess').textContent=sessions.length;await renderAdminContent()}catch(e){toast('تعذر تحميل لوحة الإدارة');console.error(e)}}
-async function renderAdminContent(){const w=$('adminContent');w.innerHTML='<div class="spinner">جاري التحميل...</div>';if(adminMode==='logs'){const d=muscatDate();w.innerHTML=`<div class="toolbar" style="margin-bottom:12px"><input id="adminDate" class="field" type="date" value="${d}" style="max-width:220px" onchange="renderAdminLogs()"><button class="btn ghost" onclick="exportAdminDate()">تصدير Excel</button></div><div id="adminLogsWrap"></div>`;return renderAdminLogs()}if(adminMode==='access')return renderAccess();return renderAddedStudents()}
-async function renderAdminLogs(){const d=$('adminDate').value;const w=$('adminLogsWrap');w.innerHTML='<div class="spinner">جاري التحميل...</div>';try{const rows=await rpc('admin_daily_records',{p_pin:adminPin,p_date:d});currentLog=rows;if(!rows.length){w.innerHTML='<div class="empty">لا توجد تسجيلات.</div>';return}let h='<div class="tablewrap"><table class="log"><thead><tr><th>#</th><th>الطالب</th><th>الصف/الشعبة</th><th>الوقت</th><th>المعلم</th><th></th></tr></thead><tbody>';rows.forEach((x,i)=>h+=`<tr><td>${i+1}</td><td>${esc(x.student_name)}</td><td>${x.grade}/${x.section}</td><td>${muscatTime(x.recorded_at)}</td><td>${esc(x.teacher_name)}</td><td><button class="btn danger" style="padding:7px 9px" onclick="adminDeleteLate(${x.id})">حذف</button></td></tr>`);h+='</tbody></table></div>';w.innerHTML=h}catch(e){w.innerHTML='<div class="empty">تعذر تحميل السجل.</div>'}}
-function exportAdminDate(){exportRows(currentLog,`سجل_التأخير_${$('adminDate').value}`)}
+function adminTab(m){adminMode=m;['Logs','Manual','Search','Frequent','Access','Students'].forEach(n=>{const el=$('tab'+n);if(el)el.classList.remove('active')});const active=$('tab'+m.charAt(0).toUpperCase()+m.slice(1));if(active)active.classList.add('active');renderAdminContent()}
+async function renderAdmin(){try{const wr=weekRange(),mr=monthRange(),today=muscatDate();const [td,wk,mo,added,sessions]=await Promise.all([
+  rpc('admin_period_records',{p_pin:adminPin,p_from:today,p_to:today,p_grade:null,p_section:null,p_teacher_id:null}),
+  rpc('admin_period_records',{p_pin:adminPin,p_from:wr.start,p_to:wr.end,p_grade:null,p_section:null,p_teacher_id:null}),
+  rpc('admin_period_records',{p_pin:adminPin,p_from:mr.start,p_to:mr.end,p_grade:null,p_section:null,p_teacher_id:null}),
+  rpc('admin_added_students',{p_pin:adminPin}),
+  rpc('admin_teacher_sessions',{p_pin:adminPin,p_from:today,p_to:today})]);
+  $('statToday').textContent=td.length;$('statWeek').textContent=wk.length;$('statMonth').textContent=mo.length;$('statAdded').textContent=added.length;$('statAccess').textContent=sessions.length;await renderAdminContent()
+}catch(e){toast('تعذر تحميل لوحة الإدارة. شغّل ملف SQL الخاص بـ V6 أولاً');console.error(e)}}
+async function renderAdminContent(){const w=$('adminContent');w.innerHTML='<div class="spinner">جاري التحميل...</div>';if(adminMode==='logs')return renderAdminLogsPanel();if(adminMode==='manual')return renderAdminManual();if(adminMode==='search')return renderAdminSearch();if(adminMode==='frequent')return renderFrequent();if(adminMode==='access')return renderAccess();return renderAddedStudents()}
+
+function renderAdminLogsPanel(){const w=$('adminContent');w.innerHTML=`
+  <div class="toolbar" style="margin-bottom:12px">
+    <select id="adminPeriod" class="select" onchange="adminPeriodChanged()"><option value="daily">يومي</option><option value="weekly">أسبوعي</option><option value="monthly">شهري</option></select>
+    <input id="adminAnchor" class="field" type="date" value="${muscatDate()}" onchange="renderAdminLogs()">
+    <select id="filterGrade" class="select" onchange="adminGradeFilterChanged()"><option value="">كل الصفوف</option><option value="7">السابع</option><option value="8">الثامن</option><option value="9">التاسع</option></select>
+    <select id="filterSection" class="select" onchange="renderAdminLogs()"><option value="">كل الشعب</option></select>
+    <select id="filterTeacher" class="select" onchange="renderAdminLogs()"><option value="">كل المعلمين</option>${teachers.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join('')}<option value="__admin">الإدارة</option></select>
+    <button class="btn ghost" onclick="exportAdminCurrent()">تصدير Excel</button>
+  </div>
+  <div id="adminRangeText" class="mini" style="margin-bottom:10px"></div><div id="adminLogsWrap"></div>`;adminGradeFilterChanged(false);renderAdminLogs()}
+function adminPeriodChanged(){renderAdminLogs()}
+function adminGradeFilterChanged(refresh=true){const g=Number($('filterGrade').value||0);const s=$('filterSection');if(!s)return;s.innerHTML='<option value="">كل الشعب</option>';if(g){const max=g===7?11:13;for(let i=1;i<=max;i++)s.innerHTML+=`<option value="${i}">${g}/${i}</option>`}if(refresh)renderAdminLogs()}
+function adminSelectedRange(){const mode=$('adminPeriod').value,a=$('adminAnchor').value||muscatDate();if(mode==='daily')return {start:a,end:a,label:'يومي'};if(mode==='weekly'){const r=weekRange(a);return {...r,label:'أسبوعي'}}const r=monthRange(a);return {...r,label:'شهري'}}
+async function adminTeacherIdFromFilter(){const v=$('filterTeacher').value;if(!v)return null;if(v!=='__admin')return Number(v);try{const rows=await table('teachers?select=id&name=eq.%D8%A7%D9%84%D8%A5%D8%AF%D8%A7%D8%B1%D8%A9');return rows[0]?.id||null}catch{return null}}
+async function renderAdminLogs(){const w=$('adminLogsWrap');if(!w)return;w.innerHTML='<div class="spinner">جاري التحميل...</div>';try{const r=adminSelectedRange(),g=$('filterGrade').value?Number($('filterGrade').value):null,s=$('filterSection').value?Number($('filterSection').value):null,t=await adminTeacherIdFromFilter();$('adminRangeText').textContent=`${r.label}: من ${displayDate(r.start)} إلى ${displayDate(r.end)}`;const rows=await rpc('admin_period_records',{p_pin:adminPin,p_from:r.start,p_to:r.end,p_grade:g,p_section:s,p_teacher_id:t});currentLog=rows;if(!rows.length){w.innerHTML='<div class="empty">لا توجد تسجيلات.</div>';return}let h='<div class="tablewrap"><table class="log"><thead><tr><th>#</th><th>الطالب</th><th>الصف/الشعبة</th><th>التاريخ</th><th>الوقت</th><th>المعلم</th><th>السبب</th><th></th></tr></thead><tbody>';rows.forEach((x,i)=>h+=`<tr><td>${i+1}</td><td>${esc(x.student_name)}</td><td>${x.grade}/${x.section}</td><td>${displayDate(isoDateFromTs(x.recorded_at))}</td><td>${muscatTime(x.recorded_at)}</td><td>${esc(x.teacher_name)}</td><td>${esc(x.reason||'تأخير صباحي')}</td><td><button class="btn warn" style="padding:7px 9px" onclick="editLateReason(${x.id})">تعديل السبب</button> <button class="btn danger" style="padding:7px 9px" onclick="adminDeleteLate(${x.id})">حذف</button></td></tr>`);h+='</tbody></table></div>';w.innerHTML=h}catch(e){w.innerHTML='<div class="empty">تعذر تحميل السجل.</div>';console.error(e)}}
+function exportAdminCurrent(){const r=adminSelectedRange();exportRows(currentLog,`سجل_${r.label}_${r.start}_${r.end}`)}
+async function editLateReason(id){const row=currentLog.find(x=>Number(x.id)===Number(id));const oldReason=row?.reason||'تأخير صباحي';const reason=prompt('اكتب سبب التسجيل:',oldReason);if(reason===null)return;try{await rpc('admin_update_late_reason',{p_pin:adminPin,p_id:id,p_reason:reason});toast('تم تعديل السبب');await renderAdminLogs()}catch(e){toast('تعذر التعديل')}}
 async function adminDeleteLate(id){if(!confirm('حذف تسجيل التأخير؟'))return;try{await rpc('admin_delete_late',{p_pin:adminPin,p_id:id});toast('تم الحذف');await renderAdmin()}catch(e){toast('تعذر الحذف')}}
-async function renderAccess(){const w=$('adminContent');try{const rows=await rpc('admin_teacher_sessions',{p_pin:adminPin,p_from:null,p_to:null});if(!rows.length){w.innerHTML='<div class="empty">لا يوجد دخول للمعلمين.</div>';return}let h='<div class="tablewrap"><table class="log"><thead><tr><th>#</th><th>المعلم</th><th>اليوم</th><th>التاريخ</th><th>وقت الدخول</th><th>آخر نشاط</th></tr></thead><tbody>';rows.forEach((x,i)=>h+=`<tr><td>${i+1}</td><td>${esc(x.teacher_name)}</td><td>${esc(x.duty_day_ar)}</td><td>${displayDate(isoDateFromTs(x.login_at))}</td><td>${muscatTime(x.login_at)}</td><td>${muscatTime(x.last_activity_at)}</td></tr>`);h+='</tbody></table></div>';w.innerHTML=h}catch(e){w.innerHTML='<div class="empty">تعذر تحميل دخول المعلمين.</div>'}}
-async function renderAddedStudents(){const w=$('adminContent');try{const rows=await rpc('admin_added_students',{p_pin:adminPin});if(!rows.length){w.innerHTML='<div class="empty">لا يوجد طلاب مضافون يدويًا.</div>';return}let h='<div class="tablewrap"><table class="log"><thead><tr><th>#</th><th>الطالب</th><th>الصف/الشعبة</th><th></th></tr></thead><tbody>';rows.forEach((x,i)=>h+=`<tr><td>${i+1}</td><td>${esc(x.name)}</td><td>${x.grade}/${x.section}</td><td><button class="btn danger" style="padding:7px 9px" onclick="adminDeleteStudent(${x.id})">حذف</button></td></tr>`);h+='</tbody></table></div>';w.innerHTML=h}catch(e){w.innerHTML='<div class="empty">تعذر تحميل الطلاب المضافين.</div>'}}
+
+function renderAdminManual(){const w=$('adminContent');w.innerHTML=`<div class="warnbox"><b>تسجيل إداري إضافي</b><br>يمكن للمدير تسجيل نفس الطالب أكثر من مرة في اليوم. هذا لا يمنع المعلم المناوب من تسجيله مرة واحدة.</div><input id="manualSearch" class="search" placeholder="ابحث عن الطالب بالاسم..." oninput="adminManualSearchChanged()"><div id="manualResults" class="result-list"></div>`}
+let manualTimer=null;
+function adminManualSearchChanged(){clearTimeout(manualTimer);const q=$('manualSearch').value.trim();if(q.length<2){$('manualResults').innerHTML='';return}manualTimer=setTimeout(()=>adminManualSearch(q),250)}
+async function adminManualSearch(q){const w=$('manualResults');w.innerHTML='<div class="spinner">جاري البحث...</div>';try{manualResultsCache=await rpc('search_students',{p_query:q});w.innerHTML=manualResultsCache.length?manualResultsCache.map(x=>`<div class="result"><div><b>${esc(x.name)}</b><small>${x.grade}/${x.section} • إجمالي التأخيرات ${x.total_lates||0}</small></div><button class="btn danger" onclick="adminRegisterForStudent(${x.id})">تسجيل</button></div>`).join(''):'<div class="empty">لا يوجد طالب مطابق.</div>'}catch(e){w.innerHTML='<div class="empty">تعذر البحث.</div>'}}
+async function adminRegisterForStudent(id){const student=manualResultsCache.find(x=>Number(x.id)===Number(id));if(!student)return;const name=student.name;const choices='اختر السبب:\n1 = تأخير صباحي\n2 = نوم في الفصل\n3 = تأخر عن الحصة\n4 = أخرى';const c=prompt(choices,'1');if(c===null)return;let reason={'1':'تأخير صباحي','2':'نوم في الفصل','3':'تأخر عن الحصة'}[c];if(!reason){reason=prompt('اكتب السبب:','أخرى');if(reason===null)return}if(!confirm(`تسجيل «${reason}» للطالب ${name}؟`))return;try{await rpc('admin_record_late',{p_pin:adminPin,p_student_id:id,p_reason:reason});toast('تم التسجيل الإداري للطالب');await renderAdmin()}catch(e){toast('تعذر التسجيل الإداري');console.error(e)}}
+
+function renderAdminSearch(){const w=$('adminContent');w.innerHTML=`<input id="adminStudentSearch" class="search" placeholder="ابحث عن أي طالب بالاسم..." oninput="adminStudentSearchChanged()"><div id="adminStudentResults" class="result-list"></div><div id="studentHistory"></div>`}
+let adminSearchTimer=null;
+function adminStudentSearchChanged(){clearTimeout(adminSearchTimer);const q=$('adminStudentSearch').value.trim();if(q.length<2){$('adminStudentResults').innerHTML='';$('studentHistory').innerHTML='';return}adminSearchTimer=setTimeout(()=>adminStudentSearch(q),250)}
+async function adminStudentSearch(q){const w=$('adminStudentResults');w.innerHTML='<div class="spinner">جاري البحث...</div>';try{const rows=await rpc('search_students',{p_query:q});w.innerHTML=rows.length?rows.map(x=>`<div class="result"><div><b>${esc(x.name)}</b><small>${x.grade}/${x.section} • إجمالي التأخيرات ${x.total_lates||0}</small></div><button class="btn primary" onclick="loadStudentHistory(${x.id})">فتح السجل</button></div>`).join(''):'<div class="empty">لا يوجد طالب مطابق.</div>'}catch(e){w.innerHTML='<div class="empty">تعذر البحث.</div>'}}
+async function loadStudentHistory(id){const w=$('studentHistory');w.innerHTML='<div class="spinner">جاري تحميل سجل الطالب...</div>';try{const rows=await rpc('admin_student_history',{p_pin:adminPin,p_student_id:id});if(!rows.length){w.innerHTML='<div class="empty">لا توجد تأخيرات مسجلة لهذا الطالب.</div>';return}const x=rows[0];let h=`<div class="divider"></div><h3>${esc(x.student_name)} <span class="pill">${x.grade}/${x.section}</span></h3><div class="mini">إجمالي السجلات: ${rows.length}</div><div class="tablewrap"><table class="log"><thead><tr><th>#</th><th>التاريخ</th><th>الوقت</th><th>المعلم</th><th>السبب</th></tr></thead><tbody>`;rows.forEach((r,i)=>h+=`<tr><td>${i+1}</td><td>${displayDate(isoDateFromTs(r.recorded_at))}</td><td>${muscatTime(r.recorded_at)}</td><td>${esc(r.teacher_name)}</td><td>${esc(r.reason||'تأخير صباحي')}</td></tr>`);h+='</tbody></table></div>';w.innerHTML=h}catch(e){w.innerHTML='<div class="empty">تعذر تحميل سجل الطالب.</div>'}}
+
+function renderFrequent(){const mr=monthRange();const w=$('adminContent');w.innerHTML=`<div class="toolbar" style="margin-bottom:12px"><input id="freqFrom" class="field" type="date" value="${mr.start}"><input id="freqTo" class="field" type="date" value="${mr.end}"><input id="freqMin" class="field" type="number" min="1" value="3" placeholder="الحد الأدنى"><button class="btn primary" onclick="loadFrequent()">عرض</button></div><div id="freqWrap"></div>`;loadFrequent()}
+async function loadFrequent(){const w=$('freqWrap');w.innerHTML='<div class="spinner">جاري التحميل...</div>';try{frequentCache=await rpc('admin_frequent_students',{p_pin:adminPin,p_from:$('freqFrom').value,p_to:$('freqTo').value,p_min_count:Number($('freqMin').value||3)});if(!frequentCache.length){w.innerHTML='<div class="empty">لا يوجد طلاب وصلوا إلى هذا العدد في الفترة المحددة.</div>';return}let h='<div class="tablewrap"><table class="log"><thead><tr><th>#</th><th>الطالب</th><th>الصف/الشعبة</th><th>عدد التأخيرات</th><th></th></tr></thead><tbody>';frequentCache.forEach((x,i)=>h+=`<tr><td>${i+1}</td><td>${esc(x.student_name)}</td><td>${x.grade}/${x.section}</td><td><b class="danger-text">${x.late_count}</b></td><td><button class="btn ghost" style="padding:7px 9px" onclick="openFrequentStudent(${x.student_id})">فتح السجل</button></td></tr>`);h+='</tbody></table></div>';w.innerHTML=h}catch(e){w.innerHTML='<div class="empty">تعذر تحميل القائمة.</div>';console.error(e)}}
+
+function openFrequentStudent(id){const x=frequentCache.find(r=>Number(r.student_id)===Number(id));if(!x)return;adminMode='search';adminTab('search');setTimeout(()=>{const inp=$('adminStudentSearch');if(inp){inp.value=x.student_name;adminStudentSearch(x.student_name)}},50)}
+
+async function renderAccess(){const w=$('adminContent');try{const rows=await rpc('admin_teacher_sessions',{p_pin:adminPin,p_from:null,p_to:null});if(!rows.length){w.innerHTML='<div class="empty">لا يوجد دخول للمعلمين.</div>';return}let h='<div class="tablewrap"><table class="log"><thead><tr><th>#</th><th>المعلم</th><th>اليوم</th><th>التاريخ</th><th>وقت الدخول</th><th>آخر نشاط</th></tr></thead><tbody>';frequentCache.forEach((x,i)=>h+=`<tr><td>${i+1}</td><td>${esc(x.teacher_name)}</td><td>${esc(x.duty_day_ar)}</td><td>${displayDate(isoDateFromTs(x.login_at))}</td><td>${muscatTime(x.login_at)}</td><td>${muscatTime(x.last_activity_at)}</td></tr>`);h+='</tbody></table></div>';w.innerHTML=h}catch(e){w.innerHTML='<div class="empty">تعذر تحميل دخول المعلمين.</div>'}}
+async function renderAddedStudents(){const w=$('adminContent');try{const rows=await rpc('admin_added_students',{p_pin:adminPin});if(!rows.length){w.innerHTML='<div class="empty">لا يوجد طلاب مضافون يدويًا.</div>';return}let h='<div class="tablewrap"><table class="log"><thead><tr><th>#</th><th>الطالب</th><th>الصف/الشعبة</th><th>أضيف بواسطة</th><th>التاريخ</th><th></th></tr></thead><tbody>';frequentCache.forEach((x,i)=>h+=`<tr><td>${i+1}</td><td>${esc(x.name)}</td><td>${x.grade}/${x.section}</td><td>${esc(x.added_by_teacher_name||'غير محدد')}</td><td>${displayDate(isoDateFromTs(x.created_at))}</td><td><button class="btn danger" style="padding:7px 9px" onclick="adminDeleteStudent(${x.id})">حذف</button></td></tr>`);h+='</tbody></table></div>';w.innerHTML=h}catch(e){w.innerHTML='<div class="empty">تعذر تحميل الطلاب المضافين.</div>';console.error(e)}}
 async function adminDeleteStudent(id){if(!confirm('حذف الطالب المضاف؟'))return;try{await rpc('admin_delete_student',{p_pin:adminPin,p_id:id});toast('تم حذف الطالب');await renderAdmin()}catch(e){toast('تعذر حذف الطالب')}}
+async function downloadFullBackup(){try{toast('جاري تجهيز النسخة الاحتياطية...');const rows=await rpc('admin_backup_all',{p_pin:adminPin});exportRows(rows,`نسخة_احتياطية_كاملة_${muscatDate()}`)}catch(e){toast('تعذر تجهيز النسخة الاحتياطية');console.error(e)}}
+
 init();
 </script>
-</body></html>
+</body>
+</html>
