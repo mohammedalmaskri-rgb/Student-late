@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>نظام تأخير الطلاب V6</title>
+<title>نظام تأخير الطلاب V6.1</title>
 <style>
 :root{--bg:#f4f7fb;--card:#fff;--ink:#162033;--muted:#6b7280;--primary:#1f5fbf;--primary2:#174a95;--danger:#b42318;--ok:#14804a;--line:#e5e7eb;--shadow:0 10px 30px rgba(22,32,51,.08);--warn:#9a6700;--purple:#6d28d9}
 *{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink)}
@@ -39,7 +39,6 @@
 
   <div id="gradeView" class="card hidden">
     <div class="section-title"><h2>اختر الصف</h2><span id="teacherBadge" class="badge"></span></div>
-    <div class="warnbox"><b>🔎 الطالب لا يعرف صفه؟</b><br>ابحث عن اسمه هنا في جميع الصفوف والشعب.</div>
     <input id="globalSearch" class="search" placeholder="ابحث عن الطالب في جميع الصفوف والشعب..." oninput="globalSearchChanged()" />
     <div id="globalSearchResults" class="result-list" style="margin-bottom:14px"></div>
     <div class="grid">
@@ -88,14 +87,13 @@
       <button class="btn tab active" id="tabLogs" onclick="adminTab('logs')">السجلات والتقارير</button>
       <button class="btn tab" id="tabManual" onclick="adminTab('manual')">+ تسجيل إداري</button>
       <button class="btn tab" id="tabSearch" onclick="adminTab('search')">بحث وسجل طالب</button>
-      <button class="btn tab" id="tabFrequent" onclick="adminTab('frequent')">كثيرو التأخير</button>
+      <button class="btn tab" id="tabFrequent" onclick="adminTab('frequent')">متابعة أيام التأخير</button>
       <button class="btn tab" id="tabAccess" onclick="adminTab('access')">دخول المعلمين</button>
       <button class="btn tab" id="tabStudents" onclick="adminTab('students')">الطلاب المضافون</button>
     </div>
     <div id="adminContent"></div>
   </div>
 
-  <div class="notice">✅ النسخة V6: بحث عام عن الطالب، إضافة الطالب داخل شعبته، منع تكرار المعلم، وتقارير وصلاحيات موسعة للمدير.</div>
 </div>
 
 <div id="toast" class="toast"></div>
@@ -225,8 +223,8 @@ function adminStudentSearchChanged(){clearTimeout(adminSearchTimer);const q=$('a
 async function adminStudentSearch(q){const w=$('adminStudentResults');w.innerHTML='<div class="spinner">جاري البحث...</div>';try{const rows=await rpc('search_students',{p_query:q});w.innerHTML=rows.length?rows.map(x=>`<div class="result"><div><b>${esc(x.name)}</b><small>${x.grade}/${x.section} • إجمالي التأخيرات ${x.total_lates||0}</small></div><button class="btn primary" onclick="loadStudentHistory(${x.id})">فتح السجل</button></div>`).join(''):'<div class="empty">لا يوجد طالب مطابق.</div>'}catch(e){w.innerHTML='<div class="empty">تعذر البحث.</div>'}}
 async function loadStudentHistory(id){const w=$('studentHistory');w.innerHTML='<div class="spinner">جاري تحميل سجل الطالب...</div>';try{const rows=await rpc('admin_student_history',{p_pin:adminPin,p_student_id:id});if(!rows.length){w.innerHTML='<div class="empty">لا توجد تأخيرات مسجلة لهذا الطالب.</div>';return}const x=rows[0];let h=`<div class="divider"></div><h3>${esc(x.student_name)} <span class="pill">${x.grade}/${x.section}</span></h3><div class="mini">إجمالي السجلات: ${rows.length}</div><div class="tablewrap"><table class="log"><thead><tr><th>#</th><th>التاريخ</th><th>الوقت</th><th>المعلم</th><th>السبب</th></tr></thead><tbody>`;rows.forEach((r,i)=>h+=`<tr><td>${i+1}</td><td>${displayDate(isoDateFromTs(r.recorded_at))}</td><td>${muscatTime(r.recorded_at)}</td><td>${esc(r.teacher_name)}</td><td>${esc(r.reason||'تأخير صباحي')}</td></tr>`);h+='</tbody></table></div>';w.innerHTML=h}catch(e){w.innerHTML='<div class="empty">تعذر تحميل سجل الطالب.</div>'}}
 
-function renderFrequent(){const mr=monthRange();const w=$('adminContent');w.innerHTML=`<div class="toolbar" style="margin-bottom:12px"><input id="freqFrom" class="field" type="date" value="${mr.start}"><input id="freqTo" class="field" type="date" value="${mr.end}"><input id="freqMin" class="field" type="number" min="1" value="3" placeholder="الحد الأدنى"><button class="btn primary" onclick="loadFrequent()">عرض</button></div><div id="freqWrap"></div>`;loadFrequent()}
-async function loadFrequent(){const w=$('freqWrap');w.innerHTML='<div class="spinner">جاري التحميل...</div>';try{frequentCache=await rpc('admin_frequent_students',{p_pin:adminPin,p_from:$('freqFrom').value,p_to:$('freqTo').value,p_min_count:Number($('freqMin').value||3)});if(!frequentCache.length){w.innerHTML='<div class="empty">لا يوجد طلاب وصلوا إلى هذا العدد في الفترة المحددة.</div>';return}let h='<div class="tablewrap"><table class="log"><thead><tr><th>#</th><th>الطالب</th><th>الصف/الشعبة</th><th>عدد التأخيرات</th><th></th></tr></thead><tbody>';frequentCache.forEach((x,i)=>h+=`<tr><td>${i+1}</td><td>${esc(x.student_name)}</td><td>${x.grade}/${x.section}</td><td><b class="danger-text">${x.late_count}</b></td><td><button class="btn ghost" style="padding:7px 9px" onclick="openFrequentStudent(${x.student_id})">فتح السجل</button></td></tr>`);h+='</tbody></table></div>';w.innerHTML=h}catch(e){w.innerHTML='<div class="empty">تعذر تحميل القائمة.</div>';console.error(e)}}
+function renderFrequent(){const w=$('adminContent');w.innerHTML=`<div class="section-title"><h3 style="margin:0">متابعة أيام التأخير</h3><span class="badge">يُحسب اليوم مرة واحدة فقط</span></div><div class="toolbar" style="margin-bottom:12px"><button class="btn primary freq-filter" data-min="1" onclick="loadLateDays(1,this)">الكل</button><button class="btn ghost freq-filter" data-min="2" onclick="loadLateDays(2,this)">2+ أيام</button><button class="btn ghost freq-filter" data-min="3" onclick="loadLateDays(3,this)">3+ أيام</button><button class="btn ghost freq-filter" data-min="4" onclick="loadLateDays(4,this)">4+ أيام</button><button class="btn ghost freq-filter" data-min="5" onclick="loadLateDays(5,this)">5+ أيام</button></div><div id="freqWrap"></div>`;loadLateDays(1,$('.freq-filter'))}
+async function loadLateDays(minDays=1,btn=null){document.querySelectorAll('.freq-filter').forEach(b=>b.className='btn ghost freq-filter');if(btn)btn.className='btn primary freq-filter';const w=$('freqWrap');w.innerHTML='<div class="spinner">جاري حساب أيام التأخير...</div>';try{frequentCache=await rpc('admin_late_days',{p_pin:adminPin,p_min_days:Number(minDays)});if(!frequentCache.length){w.innerHTML='<div class="empty">لا يوجد طلاب ضمن هذا التصنيف.</div>';return}let h='<div class="mini" style="margin-bottom:10px">عدد الأيام = عدد التواريخ المختلفة التي سُجل فيها الطالب متأخرًا، حتى لو كان له أكثر من تسجيل في اليوم نفسه.</div><div class="tablewrap"><table class="log"><thead><tr><th>#</th><th>الطالب</th><th>الصف/الشعبة</th><th>أيام التأخير</th><th>التنبيه</th><th></th></tr></thead><tbody>';frequentCache.forEach((x,i)=>{const d=Number(x.late_days||0);const alert=d>=4?'🔴 وصل '+d+' أيام تأخير':d>=2?'⚠️ '+d+' أيام تأخير':'—';h+=`<tr><td>${i+1}</td><td>${esc(x.student_name)}</td><td>${x.grade}/${x.section}</td><td><b class="${d>=4?'danger-text':''}">${d}</b></td><td>${alert}</td><td><button class="btn ghost" style="padding:7px 9px" onclick="openFrequentStudent(${x.student_id})">فتح السجل</button></td></tr>`});h+='</tbody></table></div>';w.innerHTML=h}catch(e){w.innerHTML='<div class="empty">تعذر تحميل متابعة أيام التأخير.</div>';console.error(e)}}
 
 function openFrequentStudent(id){const x=frequentCache.find(r=>Number(r.student_id)===Number(id));if(!x)return;adminMode='search';adminTab('search');setTimeout(()=>{const inp=$('adminStudentSearch');if(inp){inp.value=x.student_name;adminStudentSearch(x.student_name)}},50)}
 
