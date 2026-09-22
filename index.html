@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>نظام تأخير الطلاب V4</title>
+<title>نظام تأخير الطلاب V4.1</title>
 <style>
 :root{--bg:#f4f7fb;--card:#fff;--ink:#162033;--muted:#6b7280;--primary:#1f5fbf;--primary2:#174a95;--danger:#b42318;--ok:#14804a;--line:#e5e7eb;--shadow:0 10px 30px rgba(22,32,51,.08);--warn:#9a6700}
 *{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink)}
@@ -55,7 +55,7 @@ async function loadStudents(){try{students=await rpc('get_students',{p_grade:gra
 function renderStudents(){const q=$('search').value.trim();const rows=students.filter(x=>!q||x.name.includes(q));$('students').innerHTML=rows.length?rows.map(s=>`<div class="student"><div><div class="name">${esc(s.name)}</div><div class="count">إجمالي مرات التأخير: ${s.total_lates||0}</div></div><button class="latebtn" onclick="askLate(${s.id})">تأخير</button></div>`).join(''):'<div class="empty">لا يوجد طلاب.</div>'}
 function askLate(id){pendingStudent=students.find(x=>x.id===id);$('confirmText').innerHTML=`تسجيل تأخير للطالب:<br><b>${esc(pendingStudent.name)}</b><br>${grade}/${section} — ${esc(teacher.name)}`;$('confirmModal').classList.remove('hidden')}
 function cancelConfirm(){pendingStudent=null;$('confirmModal').classList.add('hidden')}
-async function confirmLate(){if(!pendingStudent)return;const n=pendingStudent.name;try{await rpc('record_late',{p_student_id:pendingStudent.id,p_teacher_id:teacher.id,p_session_id:sessionId});cancelConfirm();await loadStudents();toast('تم تسجيل تأخير '+n)}catch(e){toast('تعذر تسجيل التأخير');console.error(e)}}
+async function confirmLate(){if(!pendingStudent)return;const st=pendingStudent,n=st.name;try{const today=await rpc('daily_records',{p_date:muscatDate()});if(today.some(x=>Number(x.student_id)===Number(st.id))){cancelConfirm();toast('⚠️ هذا الطالب مسجل متأخر اليوم مسبقًا');return}await rpc('record_late',{p_student_id:st.id,p_teacher_id:teacher.id,p_session_id:sessionId});cancelConfirm();await loadStudents();toast('تم تسجيل تأخير '+n)}catch(e){toast('تعذر تسجيل التأخير');console.error(e)}}
 function openAddStudent(){$('addStudentPlace').textContent=`سيضاف الطالب إلى الصف/الشعبة ${grade}/${section}`;$('newStudentName').value='';$('addStudentModal').classList.remove('hidden')}
 function closeAddStudent(){$('addStudentModal').classList.add('hidden')}
 async function saveNewStudent(){const name=$('newStudentName').value.trim();if(name.length<3)return toast('اكتب اسم الطالب');try{await rpc('add_student',{p_name:name,p_grade:grade,p_section:section});closeAddStudent();await loadStudents();toast('تمت إضافة الطالب')}catch(e){toast('تعذر إضافة الطالب أو أنه موجود');console.error(e)}}
